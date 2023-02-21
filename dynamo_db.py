@@ -7,7 +7,7 @@ from utils import Demo
 # If you are working on an EC2 instance, and it has proper
 # permissions (namely DynamoDB access permissions: read, write, etc.)
 # the setup session call is NOT needed. Use it only when outside AWS
-boto3.setup_default_session(profile_name='soldev-training')
+# boto3.setup_default_session(profile_name='soldev-training')
 
 dynamo_resource = boto3.resource('dynamodb', region_name='us-east-1')  # or choose a different region, i.e. us-west-1
 
