@@ -80,6 +80,10 @@ class Demo:
         else:
             return self.table
 
+    def set_table(self, table_name):
+        if not self.table:
+            self.table = self.resource.Table(table_name)
+
     def add_item(self, table_name=None, **kwargs):
         """
         Adds a movie to the table.
@@ -87,8 +91,7 @@ class Demo:
         :param table_name: if method is used on an existing table, table_name should be provided
         :param kwargs: dictionary attribute name/attribute value
         """
-        if not self.table:
-            self.table = self.resource.Table(table_name)
+        self.set_table(table_name=table_name)
 
         try:
             self.table.put_item(
@@ -106,8 +109,7 @@ class Demo:
         :param table_name: if method is used on an existing table, table_name should be provided
         :return: The data about the requested item.
         """
-        if not self.table:
-            self.table = self.resource.Table(table_name)
+        self.set_table(table_name=table_name)
 
         try:
             response = self.table.get_item(Key=kwargs)
@@ -120,17 +122,22 @@ class Demo:
         else:
             return response['Item']
 
-    def query_items(self, partition_key_name, partition_key_value, range_key_name=None, range_key_bounds=None, index_name=None):
+    def query_items(self, partition_key_name, partition_key_value,
+                    range_key_name=None, range_key_bounds=None,
+                    index_name=None, table_name=None):
         """
         Queries for movies that were released in the specified year.
 
-        :param range_key_bounds:
-        :param range_key_name:
-        :param index_name:
+        :param table_name: table where query is run
+        :param range_key_bounds: list of two bounds, i.e. [7, 10]
+        :param range_key_name: range or sort key name
+        :param index_name: often ends with -index
         :param partition_key_value: use a partition key
         :param partition_key_name: value to query
         :return: The list of items that were sold.
         """
+        self.set_table(table_name=table_name)
+
         additional_attr = {}
         key_condition_expr = {'KeyConditionExpression': Key(partition_key_name).eq(partition_key_value)}
         if index_name:
@@ -151,3 +158,11 @@ class Demo:
             raise
         else:
             return response['Items']
+
+    def scan_all(self, table_name=None):
+        """
+        Returns all items.
+
+        :return: The list of items.
+        """
+        pass
