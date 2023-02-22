@@ -36,7 +36,7 @@ print(f"All records for 111222 customer: {query_customers}\n")
 # Retrive all records with a GSI partition key: transactionID
 # transactuinID is a global secondary index
 query_customers = new_demo.query_items(partition_key_name='transactionID', partition_key_value='tr120', index_name='transactionID-index')
-print(f"All records for 111222 customer: {query_customers}\n")
+print(f"All records for 111222 customer, transaction tr120 with GSI: {query_customers}\n")
 
 # Retrive all records with a given partition key: CustomerID and LSI: orderSum
 query_customers = new_demo.query_items(partition_key_name='customerID', partition_key_value='111222',
