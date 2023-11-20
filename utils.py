@@ -16,8 +16,8 @@ class Demo:
     def create_table(self, table_name):
         """
         Creates an Amazon DynamoDB table that can be used to store demo data.
-        The table uses the release year of the movie as the partition key and the
-        title as the sort key.
+        The table uses the release customer ID as the partition key and the
+        order ID as the sort key.
 
         :param table_name: The name of the table to create.
         :return: The newly created table.
@@ -86,7 +86,7 @@ class Demo:
 
     def add_item(self, table_name=None, **kwargs):
         """
-        Adds a movie to the table.
+        Adds an item to the table.
 
         :param table_name: if method is used on an existing table, table_name should be provided
         :param kwargs: dictionary attribute name/attribute value
@@ -126,7 +126,7 @@ class Demo:
                     range_key_name=None, range_key_bounds=None,
                     index_name=None, table_name=None):
         """
-        Queries for movies that were released in the specified year.
+        Queries for customers that had transactions within certain sum of money (OrderSum).
 
         :param table_name: table where query is run
         :param range_key_bounds: list of two bounds, i.e. [7, 10]
